@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{chamados.list.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{chamados.list.headline}]]</h1>
+                <div>
+                    <a th:href="@{/chamadoss/add}" class="btn btn-primary ms-2">[[#{chamados.list.createNew}]]</a>
+                </div>
+            </div>
+            <div th:if="${chamadoses.empty}">[[#{chamados.list.empty}]]</div>
+            <div th:if="${!chamadoses.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">[[#{chamados.id.label}]]</th>
+                            <th scope="col">[[#{chamados.setor.label}]]</th>
+                            <th scope="col">[[#{chamados.descricao.label}]]</th>
+                            <th scope="col">[[#{chamados.prioridade.label}]]</th>
+                            <th scope="col">[[#{chamados.aberto.label}]]</th>
+                            <th scope="col">[[#{chamados.tecnico.label}]]</th>
+                            <th scope="col">[[#{chamados.users.label}]]</th>
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="chamados : ${chamadoses}">
+                            <td>[[${chamados.id}]]</td>
+                            <td>[[${chamados.setor}]]</td>
+                            <td>[[${chamados.descricao}]]</td>
+                            <td>[[${chamados.prioridade}]]</td>
+                            <td>[[${chamados.aberto}]]</td>
+                            <td>[[${chamados.tecnico.nome}]]</td>
+                            <td>[[${chamados.users.nome}]]</td>
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/chamadoss/edit/{id}(id=${chamados.id})}" class="btn btn-sm btn-secondary">[[#{chamados.list.edit}]]</a>
+                                    <form th:action="@{/chamadoss/delete/{id}(id=${chamados.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button type="submit" class="btn btn-sm btn-secondary">[[#{chamados.list.delete}]]</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
